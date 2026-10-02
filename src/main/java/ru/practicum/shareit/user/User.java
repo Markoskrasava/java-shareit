@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 public class User {
     private Long id;
 
+    private String name;
+
     @Email(message = "Должен присутствовать символ @")
     @NotBlank(message = "Email не может быть пустым")
     private String email;
 
-    private String name;
 }
