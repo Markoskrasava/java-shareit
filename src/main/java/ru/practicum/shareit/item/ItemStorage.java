@@ -1,10 +1,12 @@
 package ru.practicum.shareit.item;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class ItemStorage {
     private final Map<Long, Item> items = new HashMap<>();
     private Long newId = 1L;

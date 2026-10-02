@@ -1,7 +1,10 @@
 package ru.practicum.shareit.user;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
+@Component
 public class UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private Long newId = 1L;
