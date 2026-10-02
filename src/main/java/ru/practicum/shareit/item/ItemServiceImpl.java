@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserStorage;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto addItem(ItemDto itemDto, Long userId) {
-        var owner = userStorage.getUserById(userId);
+        User owner = userStorage.getUserById(userId);
 
         Item item = ItemMapper.toItem(itemDto, owner);
 
