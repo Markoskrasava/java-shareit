@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private Long id;
 
+    @Email(message = "Email должен содержать символ @")
     @NotBlank(message = "Имя не может быть пустым")
     private String name;
 

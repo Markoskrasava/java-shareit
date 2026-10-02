@@ -36,7 +36,7 @@ public class ItemStorage {
 
     public List<Item> getAllItems(Long userId) {
         return items.values().stream()
-                .filter(item -> item.getOwner().getId().equals(userId))
+                .filter(item -> item.getOwner() != null && item.getOwner().getId().equals(userId))
                 .collect(Collectors.toList());
     }
 
