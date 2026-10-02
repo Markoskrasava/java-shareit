@@ -19,7 +19,7 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto patchItem(@PathVariable Long itemId, @RequestBody ItemDto patchDto, @RequestHeader("X-Sharer-User-Id") Long userId) {
+    public ItemDto patchItem(@PathVariable Long itemId, @RequestBody ItemDto patchDto, @RequestHeader(value = "X-Sharer-User-Id", required = false) Long userId) {
         return itemService.patchItem(itemId, patchDto, userId);
     }
 
@@ -29,7 +29,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemDto> getAllItems(@RequestHeader(value = "X-Sharer-User-Id", required = false) Long userId) {
         return itemService.getAllItems(userId);
     }
 
