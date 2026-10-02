@@ -35,4 +35,11 @@ public class UserStorage {
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
     }
+
+    public void deleteUser(Long userId) {
+        if (userId == null || !users.containsKey(userId)) {
+            throw new NoSuchElementException("Пользователь не найден");
+        }
+        users.remove(userId);
+    }
 }

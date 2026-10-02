@@ -2,6 +2,7 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -70,5 +71,10 @@ public class UserServiceImpl implements UserService {
         return userStorage.getAllUsers().stream()
                 .map(UserMapper::toUserDto)
                 .toList();
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userStorage.deleteUser(userId);
     }
 }

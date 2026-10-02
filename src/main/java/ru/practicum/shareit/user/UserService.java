@@ -1,6 +1,8 @@
 package ru.practicum.shareit.user;
 
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 
 public interface UserService {
@@ -11,4 +13,6 @@ public interface UserService {
     UserDto getUserById(Long userId);
 
     List<UserDto> getAllUsers();
+
+    void deleteUser(Long userId);
 }
