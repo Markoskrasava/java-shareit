@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserDto {
     private Long id;
 
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
-    @Email(message = "Должен присутствовать символ @")
+    @Email(message = "Email должен содержать символ @")
     @NotBlank(message = "Email не может быть пустым")
     private String email;
-
 }
