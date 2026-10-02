@@ -32,4 +32,11 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleValidation(MethodArgumentNotValidException e) {
         return new ErrorResponse(e.getMessage());
     }
+
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleEmailConflict(EmailAlreadyExistsException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }

@@ -2,6 +2,7 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.EmailAlreadyExistsException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
         if (userDto.getEmail() != null) {
             for (User existing : userStorage.getAllUsers()) {
                 if (existing.getEmail().equalsIgnoreCase(userDto.getEmail())) {
-                    throw new IllegalArgumentException("Email должен быть уникальным");
+                    throw new EmailAlreadyExistsException("Email должен быть уникальным");
                 }
             }
         }
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (userDto.getEmail() != null && !userDto.getEmail().equals(existing.getEmail())) {
             for (User other : userStorage.getAllUsers()) {
                 if (!other.getId().equals(userId) && other.getEmail().equalsIgnoreCase(userDto.getEmail())) {
-                    throw new IllegalArgumentException("Email должен быть уникальным");
+                    throw new EmailAlreadyExistsException("Email должен быть уникальным");
                 }
             }
         }
