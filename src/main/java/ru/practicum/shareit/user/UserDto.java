@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private Long id;
 
-    @Email(message = "Email должен содержать символ @")
     @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
+    @Email(message = "Email должен содержать символ @")
     @NotBlank(message = "Email не может быть пустым")
     private String email;
 }

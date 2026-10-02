@@ -23,8 +23,11 @@ public class ItemServiceImpl implements ItemService {
         if (owner == null) {
             throw new NoSuchElementException("Пользователь с ID " + userId + " не найден");
         }
+
         Item item = ItemMapper.toItem(itemDto, owner);
+
         Item saved = itemStorage.addItem(item);
+
         return ItemMapper.toItemDto(saved);
     }
 
