@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class User {
     private Long id;
-    private String email;
-    private String name;
 
-    public User(Long id,  String name, @NotBlank(message = "Email не может быть пустым") String email) {
-    }
+    @NotBlank(message = "Email не может быть пустым")
+    private String email;
+
+    private String name;
 }
