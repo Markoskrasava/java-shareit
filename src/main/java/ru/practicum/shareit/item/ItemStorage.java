@@ -12,9 +12,9 @@ public class ItemStorage {
     private Long newId = 1L;
 
     public Item addItem(Item item) {
-        item.setId(newId);
-        items.put(newId, item);
-        newId++;
+        Long id = newId++;
+        item.setId(id);
+        items.put(id, item);
         return item;
     }
 
