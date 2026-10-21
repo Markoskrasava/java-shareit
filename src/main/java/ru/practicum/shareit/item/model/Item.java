@@ -1,7 +1,27 @@
 package ru.practicum.shareit.item.model;
 
-/**
- * TODO Sprint add-controllers.
- */
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.user.User;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
+    private Long id;
+
+    @NotBlank(message = "Название не может быть пустым")
+    private String name;
+
+    @NotNull(message = "Поле available обязательно")
+    private Boolean available;
+
+    @NotBlank(message = "Описание не может быть пустым")
+    private String description;
+    private User owner;
+    private ItemRequest itemRequest;
 }
