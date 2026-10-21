@@ -22,5 +22,4 @@ public class User {
     @NotBlank(message = "Email не может быть пустым")
     @Column(name = "email")
     private String email;
-
 }
