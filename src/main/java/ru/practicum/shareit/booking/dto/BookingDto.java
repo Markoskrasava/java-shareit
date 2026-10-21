@@ -3,8 +3,8 @@ package ru.practicum.shareit.booking.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.practicum.shareit.booking.BookingStatus;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.item.dto.ItemShortDto;
+import ru.practicum.shareit.user.UserShortDto;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +18,11 @@ import java.time.LocalDateTime;
         @NotNull
         private LocalDateTime end;
 
-        @NotNull
         private Long itemId;
 
-        private Item item;
+        private ItemShortDto item;
 
-        private User booker;
+        private UserShortDto booker;
 
         private BookingStatus status;
     }
