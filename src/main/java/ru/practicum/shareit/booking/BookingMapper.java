@@ -1,10 +1,12 @@
 package ru.practicum.shareit.booking;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.model.Booking;
 
 import java.util.function.Function;
 
+@Component
 public class BookingMapper implements Function<Booking, BookingDto> {
 
     @Override
