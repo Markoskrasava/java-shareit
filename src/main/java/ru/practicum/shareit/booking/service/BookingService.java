@@ -9,6 +9,7 @@ import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
+import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
@@ -71,7 +72,7 @@ public class BookingService {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("Такого бронирования не существует"));
 
         if (!booking.getItem().getOwner().getId().equals(userId)) {
-            throw new NoSuchElementException("Бронирование не найдено");
+            throw new ForbiddenException("Бронирование не найдено");
         }
 
         if (booking.getStatus() != BookingStatus.WAITING) {
@@ -101,6 +102,10 @@ public class BookingService {
 
     @Transactional(readOnly = true)
     public List<BookingDto> getBookingsByUser(String state, Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new NoSuchElementException("Пользователь не найден");
+        }
+
         if (state.isBlank()) {
             state = "ALL";
         }
@@ -136,6 +141,10 @@ public class BookingService {
 
     @Transactional(readOnly = true)
     public List<BookingDto> getBookingsByOwner(String state, Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new NoSuchElementException("Пользователь не найден");
+        }
+
         if (state.isBlank()) {
             state = "ALL";
         }
