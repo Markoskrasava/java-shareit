@@ -31,7 +31,7 @@ public class BookingService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public BookingDto postBooking(BookingDto bookingDto) {
+    public BookingDto postBooking(Long userId, BookingDto bookingDto) {
         if (bookingDto.getEnd().isBefore(bookingDto.getStart())) {
             throw new ValidationException("Начальная дата должна быть раньше конечной");
         }
@@ -40,13 +40,9 @@ public class BookingService {
             throw new ValidationException("Начальная дата не должна быть равна конечной");
         }
 
-        if (bookingDto.getStart().isBefore(LocalDateTime.now())) {
-            throw new ValidationException("Дата начала должна быть в будущем");
-        }
+        User booker = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
 
-        User booker = userRepository.findById(bookingDto.getBooker().getId()).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
-
-        Item item = itemRepository.findById(bookingDto.getItem().getId()).orElseThrow(() -> new NoSuchElementException("Вещь не найдена"));
+        Item item = itemRepository.findById(bookingDto.getItemId()).orElseThrow(() -> new NoSuchElementException("Вещь не найдена"));
         if (item.getAvailable() == false) {
             throw new ValidationException("Вещь недоступна");
         }

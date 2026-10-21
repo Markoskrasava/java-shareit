@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
         private LocalDateTime end;
 
         @NotNull
+        private Long itemId;
+
         private Item item;
 
         private User booker;
