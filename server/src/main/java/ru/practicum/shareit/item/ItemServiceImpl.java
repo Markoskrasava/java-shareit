@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +88,10 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(readOnly = true)
     public List<ItemDto> getAllItems(Long userId) {
         List<Item> items = itemRepository.getAllByOwnerId(userId);
+        if (items.isEmpty()) {
+            return List.of();
+        }
+
         LocalDateTime now = LocalDateTime.now();
 
         Map<Long, BookingShortDto> lastByItem = new HashMap<>();
@@ -99,16 +104,20 @@ public class ItemServiceImpl implements ItemService {
             nextByItem.putIfAbsent(b.getItem().getId(), toShort(b));
         }
 
+        List<Long> itemIds = items.stream().map(Item::getId).toList();
+        Map<Long, List<CommentDto>> commentsByItem = commentRepository
+                .findAllByItemIdIn(itemIds).stream()
+                .collect(Collectors.groupingBy(
+                        c -> c.getItem().getId(),
+                        Collectors.mapping(CommentMapper::toDto, Collectors.toList())
+                ));
+
         return items.stream()
                 .map(item -> {
                     ItemDto dto = ItemMapper.toItemDto(item);
                     dto.setLastBooking(lastByItem.get(item.getId()));
                     dto.setNextBooking(nextByItem.get(item.getId()));
-                    dto.setComments(
-                            commentRepository.findAllByItemId(item.getId()).stream()
-                                    .map(CommentMapper::toDto)
-                                    .toList()
-                    );
+                    dto.setComments(commentsByItem.getOrDefault(item.getId(), List.of()));
                     return dto;
                 })
                 .toList();

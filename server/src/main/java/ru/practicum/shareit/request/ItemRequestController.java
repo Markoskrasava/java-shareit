@@ -10,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemRequestController {
 
-    private final ItemRequestServiceImpl itemRequestService;
+    private final ItemRequestService itemRequestService;
 
     @PostMapping
     public ItemRequestDto postRequest(@RequestBody NewItemRequest newItemRequest, @RequestHeader("X-Sharer-User-Id") Long userId) {

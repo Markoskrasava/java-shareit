@@ -43,6 +43,11 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Override
     @Transactional(readOnly = true)
     public List<ItemRequestDto> getRequestsByUser(Long userId) {
+
+        if (!userRepository.existsById(userId)) {
+            throw new NoSuchElementException("Пользователь не найден");
+        }
+
         List<ItemRequest> requests = itemRequestRepository
                 .findAllByRequestorIdOrderByCreatedDesc(userId);
 
@@ -71,6 +76,11 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Override
     @Transactional(readOnly = true)
     public List<ItemRequestDto> getRequestsByOther(Long userId) {
+
+        if (!userRepository.existsById(userId)) {
+            throw new NoSuchElementException("Пользователь не найден");
+        }
+
         List<ItemRequest> requests = itemRequestRepository
                 .findAllByRequestorIdNotOrderByCreatedDesc(userId);
 
