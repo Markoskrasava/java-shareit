@@ -1,0 +1,78 @@
+package ru.practicum.shareit.user;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    @Transactional
+    @Override
+    public UserDto createUser(UserDto userDto) {
+        if (userDto.getEmail() != null) {
+            for (User existing : userRepository.findAll()) {
+                if (existing.getEmail().equalsIgnoreCase(userDto.getEmail())) {
+                    throw new IllegalArgumentException("Email должен быть уникальным");
+                }
+            }
+        }
+
+        User user = UserMapper.toUser(userDto);
+        User saved = userRepository.save(user);
+        return UserMapper.toUserDto(saved);
+    }
+
+    @Transactional
+    @Override
+    public UserDto updateUser(Long userId, UserDto userDto) {
+        User existing = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+
+        if (userDto.getEmail() != null && !userDto.getEmail().equals(existing.getEmail())) {
+            for (User other : userRepository.findAll()) {
+                if (!other.getId().equals(userId) && other.getEmail().equalsIgnoreCase(userDto.getEmail())) {
+                    throw new IllegalArgumentException("Email должен быть уникальным");
+                }
+            }
+        }
+
+        if (userDto.getName() != null) {
+            existing.setName(userDto.getName());
+        }
+        if (userDto.getEmail() != null) {
+            existing.setEmail(userDto.getEmail());
+        }
+
+        User updated = userRepository.save(existing);
+
+        return UserMapper.toUserDto(updated);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDto getUserById(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+        return UserMapper.toUserDto(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserMapper::toUserDto)
+                .toList();
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+        userRepository.delete(user);
+    }
+}
