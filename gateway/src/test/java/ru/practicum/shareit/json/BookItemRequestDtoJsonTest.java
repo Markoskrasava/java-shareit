@@ -18,13 +18,7 @@ class BookItemRequestDtoJsonTest {
 
     @Test
     void shouldDeserializeIsoDates() throws Exception {
-        String content = """
-                {
-                  "start": "2030-01-01T10:00:00",
-                  "end": "2030-01-02T12:30:00",
-                  "itemId": 5
-                }
-                """;
+        String content = "{\"start\":\"2030-01-01T10:00:00\",\"end\":\"2030-01-02T12:30:00\",\"itemId\":5}";
 
         BookItemRequestDto dto = json.parseObject(content);
 
@@ -48,12 +42,7 @@ class BookItemRequestDtoJsonTest {
 
     @Test
     void shouldDeserializeWithoutId() throws Exception {
-        String content = """
-                {
-                  "start": "2030-01-01T10:00:00",
-                  "end": "2030-01-02T12:30:00"
-                }
-                """;
+        String content = "{\"start\":\"2030-01-01T10:00:00\",\"end\":\"2030-01-02T12:30:00\"}";
 
         BookItemRequestDto dto = json.parseObject(content);
 
